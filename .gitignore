@@ -20,3 +20,6 @@ yarn-error.log*
 **/*.bak
 **/storage
 **/.others
+.DS_Store
+
+token.js
