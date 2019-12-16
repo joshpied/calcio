@@ -1,10 +1,11 @@
 const dayjs = require('dayjs');
-const API_TOKEN = require('./token');
+const path = require('path');
+require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
 
 const headers = {
   headers: {
     Accept: 'application/json',
-    'X-Auth-Token': API_TOKEN
+    'X-Auth-Token': process.env.API_KEY
   }
 };
 

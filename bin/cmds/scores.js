@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {headers} = require('./helpers');
+const {headers} = require('../utils/helpers');
 const chalk = require('chalk');
 
 /**

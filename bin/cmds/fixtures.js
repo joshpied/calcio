@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {headers, getCurrentDate, getFutureDate, formatDate} = require('./helpers');
+const {headers, getCurrentDate, getFutureDate, formatDate} = require('../utils/helpers');
 
 async function printFixtures() {
   const today = getCurrentDate();

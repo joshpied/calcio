@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {headers} = require('./helpers');
+const {headers} = require('../utils/helpers');
 
 async function printTable() {
   const year = new Date().getFullYear();

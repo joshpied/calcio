@@ -28,6 +28,8 @@ const options = yargs
     type: 'string'
   }).argv;
 
+// console.log(process.env.API_KEY);
+
 if ('table' in options) {
   printTable();
 }
