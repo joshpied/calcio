@@ -1,25 +1,56 @@
 const axios = require('axios');
-const {headers} = require('../utils/helpers');
+const {headers, formatDate, getCurrentDate, getFutureDate} = require('../utils/helpers');
 const chalk = require('chalk');
 
-/**
- * TODO update to get scores for the entire weekend to show score of games that have and havent happened, write live next to games that are ongoing
- */
-// http://api.football-data.org/v2/competitions/2019/matches?status=LIVE OR IN_PLAY
-// LIVE | IN_PLAY
+async function getMatchDay() {
+  const today = getCurrentDate(), futureDay = getFutureDate(7);
+  const url = `http://api.football-data.org/v2/competitions/2019/matches?dateFrom=${today}&dateTo=${futureDay}`;
+  const res = await axios.get(url, headers);
+  return res.data.matches[0].matchday
+}
+
+function formatMatches(matches) {
+  return matches.map(match => ({
+    homeTeam: match.homeTeam.name,
+    awayTeam: match.awayTeam.name,
+    score: `${match.score.fullTime.homeTeam} - ${match.score.fullTime.awayTeam}`,
+    status: match.status,
+    date: match.utcDate
+  }));
+}
+
 async function printScores() {
-  const url = `http://api.football-data.org/v2/competitions/2019/matches?status=LIVE`;
+  // First need to get the current matchday manually as retrieving the currentMatchday from Serie A is wrong
+  const matchday = await getMatchDay();
+  // can now use matchday to get all matches for the current weekend
+  const url = `https://api.football-data.org/v2/competitions/2019/matches?matchday=${matchday}`;
   try {
     const res = await axios.get(url, headers);
-    const matches = res.data.matches.map(match => ({
-      homeTeam: chalk.cyan.bold(match.homeTeam.name),
-      awayTeam: chalk.cyan.bold(match.awayTeam.name),
-      score: `${match.score.fullTime.homeTeam} - ${match.score.fullTime.awayTeam}`
-    }));
-    matches.forEach(match => {
-      console.log(`${chalk.green.bold('Current Scores:')}`);
-      console.log(`${match.homeTeam} ${match.score} ${match.awayTeam}`);
-    });
+    // cleanup data we need
+    const matches = formatMatches(res.data.matches);
+    const liveMatches = matches.filter(match => match.status === 'LIVE');
+    const finishedMatches = matches.filter(match => match.status === 'FINISHED');
+    const scheduledMatches = matches.filter(match => match.status === 'SCHEDULED');
+
+    console.log(chalk.cyan.bold(`\nMatchday #${(matchday)}`));
+    if (liveMatches.length) {
+      console.log(`\nIn Play`);
+      liveMatches.forEach(match => {
+        console.log(`${chalk.green(match.homeTeam)} ${match.score} ${chalk.green(match.awayTeam)}`);
+      });
+    }
+    if (finishedMatches.length) {
+      console.log(`\nMatches Played`);
+      finishedMatches.forEach(match => {
+        console.log(`${chalk.cyanBright(match.homeTeam)} ${match.score} ${chalk.cyanBright(match.awayTeam)}`);
+      });
+    }
+    if (scheduledMatches.length) {
+      console.log(`\nMatches Scheduled`);
+      scheduledMatches.forEach(match => {
+        console.log(`${chalk.yellow(match.homeTeam)} - ${chalk.yellow(match.awayTeam)} @ ${formatDate(match.date)}`);
+      });
+    }
   } catch (e) {
     console.log(e);
   }
