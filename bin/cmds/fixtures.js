@@ -11,6 +11,10 @@ async function printFixtures() {
 
   try {
     const res = await axios.get(url, headers);
+    if (res.data.count === 0) {
+      console.log(`${chalk.red('No upcoming fixtures!')}`);
+      return;
+    }
     const matches = formatMatches(res);
     let table = new Table;
     matches.forEach(row => {

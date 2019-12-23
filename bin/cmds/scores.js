@@ -6,6 +6,8 @@ async function getMatchDay() {
   const today = getCurrentDate(), futureDay = getFutureDate(7);
   const url = `http://api.football-data.org/v2/competitions/2019/matches?dateFrom=${today}&dateTo=${futureDay}`;
   const res = await axios.get(url, headers);
+  if (res.data.count === 0)
+    return 'No upcoming matches!';
   return res.data.matches[0].matchday
 }
 
@@ -22,6 +24,10 @@ function formatMatches(matches) {
 async function printScores() {
   // First need to get the current matchday manually as retrieving the currentMatchday from Serie A is wrong
   const matchday = await getMatchDay();
+  if (matchday === 'No upcoming matches!') {
+    console.log(chalk.red(matchday));
+    return;
+  }
   // can now use matchday to get all matches for the current weekend
   const url = `https://api.football-data.org/v2/competitions/2019/matches?matchday=${matchday}`;
   try {
