@@ -4,7 +4,7 @@ const chalk = require('chalk');
 
 async function getMatchDay() {
   const today = getCurrentDate(), futureDay = getFutureDate(7);
-  const url = `http://api.football-data.org/v2/competitions/2019/matches?dateFrom=${today}&dateTo=${futureDay}`;
+  const url = `http://api.football-data.org/v2/competitions/SA/matches?dateFrom=${today}&dateTo=${futureDay}`;
   const res = await axios.get(url, headers);
   if (res.data.count === 0)
     return 'No upcoming matches!';

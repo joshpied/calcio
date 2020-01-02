@@ -7,7 +7,7 @@ const {headers, getCurrentDate, getFutureDate, formatDate} = require('../utils/h
 async function printFixtures() {
   const today = getCurrentDate();
   const futureDay = getFutureDate(7);
-  const url = `http://api.football-data.org/v2/competitions/2019/matches?dateFrom=${today}&dateTo=${futureDay}`;
+  const url = `http://api.football-data.org/v2/competitions/SA/matches?dateFrom=${today}&dateTo=${futureDay}`;
 
   try {
     const res = await axios.get(url, headers);

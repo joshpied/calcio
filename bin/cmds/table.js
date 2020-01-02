@@ -5,8 +5,8 @@ const chalk = require('chalk');
 const {headers} = require('../utils/helpers');
 
 async function printTable() {
-  const year = new Date().getFullYear();
-  const url = `http://api.football-data.org/v2/competitions/${year}/standings`;
+  const url = `http://api.football-data.org/v2/competitions/SA/standings`;
+
   try {
     const res = await axios.get(url, headers);
     const standings = formatStandings(res);
