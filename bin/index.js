@@ -5,6 +5,7 @@ const printTable = require('./cmds/table');
 const printFixtures = require('./cmds/fixtures');
 const printMilan = require('./cmds/milan');
 const printScores = require('./cmds/scores');
+const printTopScorers = require('./cmds/capocannoniere');
 
 const options = yargs
   .usage('Usage: -t <table>')
@@ -26,7 +27,14 @@ const options = yargs
     alias: 'scores',
     describe: 'Scores for live matches',
     type: 'string'
-  }).argv;
+  })
+  .usage('Usage: -c <capo>')
+  .option('c', {
+    alias: 'capo',
+    describe: 'Top scorers for the season',
+    type: 'string'
+  })
+  .argv;
 
 if ('table' in options) {
   printTable();
@@ -42,6 +50,10 @@ if ('milan' in options) {
 
 if ('scores' in options) {
   printScores();
+}
+
+if ('capo' in options) {
+  printTopScorers();
 }
 
 // TODO: TOP SCORERS -capo
