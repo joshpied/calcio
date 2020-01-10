@@ -26,10 +26,6 @@ async function printTopScorers() {
       table.newRow();
     });
     console.log(table.toString());
-    // console.log(topScorers);
-    // topScorers.forEach(scorer => {
-    //     console.log(`${chalk.yellow(scorer.position)} ${scorer.name} - ${chalk.green(scorer.goals)}`);
-    // });
   } catch (error) {
     console.log(error);
   }
