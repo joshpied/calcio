@@ -22,7 +22,6 @@ async function printTable() {
       table.newRow();
     });
     console.log(table.toString());
-
   } catch (e) {
     console.log(e);
   }

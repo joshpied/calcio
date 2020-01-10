@@ -6,6 +6,7 @@ const printFixtures = require('./cmds/fixtures');
 const printMilan = require('./cmds/milan');
 const printScores = require('./cmds/scores');
 const printTopScorers = require('./cmds/capocannoniere');
+const printTransfers = require('./cmds/transfers');
 
 const options = yargs
   .usage('Usage: -t <table>')
@@ -34,6 +35,13 @@ const options = yargs
     describe: 'Top scorers for the season',
     type: 'string'
   })
+  .usage('Usage: -r <transfers>')
+  .option('r', {
+    alias: 'transfers',
+    describe: 'Latest confirmed transfers in the league',
+    type: 'string'
+  })
+  .help()
   .argv;
 
 if ('table' in options) {
@@ -54,6 +62,10 @@ if ('scores' in options) {
 
 if ('capo' in options) {
   printTopScorers();
+}
+
+if ('transfers' in options) {
+  printTransfers();
 }
 
 // TODO: TOP SCORERS -capo
