@@ -8,6 +8,7 @@ async function getMatchDay() {
   const res = await axios.get(url, headers);
   if (res.data.count === 0)
     return 'No upcoming matches!';
+  console.log(res.data.matches[5]);
   return res.data.matches[0].matchday
 }
 
@@ -34,7 +35,7 @@ async function printScores() {
     const res = await axios.get(url, headers);
     // cleanup data we need
     const matches = formatMatches(res.data.matches);
-    const liveMatches = matches.filter(match => match.status === 'LIVE');
+    const liveMatches = matches.filter(match => match.status === 'IN_PLAY' || match.status === 'PAUSED');
     const finishedMatches = matches.filter(match => match.status === 'FINISHED');
     const scheduledMatches = matches.filter(match => match.status === 'SCHEDULED');
 
