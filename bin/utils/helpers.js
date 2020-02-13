@@ -21,9 +21,21 @@ function getFutureDate(daysInFuture) {
   return dayjs().add(daysInFuture, 'day').format('YYYY-MM-DD');
 }
 
+function getCalcioBlockLetters() {
+  return `
+  ██████╗ █████╗ ██╗      ██████╗██╗ ██████╗ 
+  ██╔════╝██╔══██╗██║     ██╔════╝██║██╔═══██╗
+  ██║     ███████║██║     ██║     ██║██║   ██║
+  ██║     ██╔══██║██║     ██║     ██║██║   ██║
+  ╚██████╗██║  ██║███████╗╚██████╗██║╚██████╔╝
+   ╚═════╝╚═╝  ╚═╝╚══════╝ ╚═════╝╚═╝ ╚═════╝   
+  `;
+}
+
 module.exports = {
   headers,
   formatDate,
   getCurrentDate,
-  getFutureDate
+  getFutureDate,
+  getCalcioBlockLetters
 };

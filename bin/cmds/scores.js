@@ -8,8 +8,7 @@ async function getMatchDay() {
   const res = await axios.get(url, headers);
   if (res.data.count === 0)
     return 'No upcoming matches!';
-  console.log(res.data.matches[5]);
-  return res.data.matches[0].matchday
+  return res.data.matches[0].matchday;
 }
 
 function formatMatches(matches) {

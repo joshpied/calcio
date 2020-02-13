@@ -8,9 +8,11 @@ const printScores = require('./cmds/scores');
 const printTopScorers = require('./cmds/capocannoniere');
 const printTransfers = require('./cmds/transfers');
 
+const { getCalcioBlockLetters } = require('./utils/helpers');
+
 const options = yargs
   .usage('Usage: -t <table>')
-  .option('t', {alias: 'table', describe: 'League table', type: 'string'})
+  .option('t', { alias: 'table', describe: 'League table', type: 'string' })
   .usage('Usage: -f <fixtures>')
   .option('f', {
     alias: 'fixtures',
@@ -41,8 +43,7 @@ const options = yargs
     describe: 'Latest confirmed transfers in the league',
     type: 'string'
   })
-  .help()
-  .argv;
+  .help().argv;
 
 if ('table' in options) {
   printTable();
@@ -68,5 +69,7 @@ if ('transfers' in options) {
   printTransfers();
 }
 
-// TODO: TOP SCORERS -capo
-// https://api.football-data.org/v2/competitions/SA/scorers
+if (JSON.stringify(options) === `{"_":[],"$0":"calcio"}`) {
+  console.log(getCalcioBlockLetters());
+  console.log('v1.0');
+}
