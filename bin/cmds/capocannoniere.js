@@ -2,14 +2,14 @@ const axios = require('axios');
 const Table = require('easy-table');
 const chalk = require('chalk');
 
-const {headers} = require('../utils/helpers');
+const { headers } = require('../utils/helpers');
 
 function formatScorers(scorers) {
   return scorers.map((scorer, index) => ({
     name: scorer.player.name.split(' ').slice(-1)[0], // last name of player
     club: scorer.team.name,
     goals: scorer.numberOfGoals,
-    position: index === 0 ? '👑' : index + 1
+    position: index + 1
   }));
 }
 
@@ -18,7 +18,7 @@ async function printTopScorers() {
   try {
     const res = await axios.get(url, headers);
     const topScorers = formatScorers(res.data.scorers);
-    let table = new Table;
+    let table = new Table();
     topScorers.forEach(row => {
       table.cell('#', chalk.bold.yellow(row.position));
       table.cell('Name', chalk.bold.white(row.name));

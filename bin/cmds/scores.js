@@ -37,6 +37,7 @@ async function printScores() {
     const liveMatches = matches.filter(match => match.status === 'IN_PLAY' || match.status === 'PAUSED');
     const finishedMatches = matches.filter(match => match.status === 'FINISHED');
     const scheduledMatches = matches.filter(match => match.status === 'SCHEDULED');
+    const postponedMatches = matches.filter(match => match.status === 'POSTPONED');
 
     console.log(chalk.cyan.bold(`\nMatchday #${(matchday)}`));
     if (liveMatches.length) {
@@ -55,6 +56,12 @@ async function printScores() {
       console.log(`\nMatches Scheduled`);
       scheduledMatches.forEach(match => {
         console.log(`${chalk.yellow(match.homeTeam)} - ${chalk.yellow(match.awayTeam)} @ ${formatDate(match.date)}`);
+      });
+    }
+    if (postponedMatches.length) {
+      console.log(`\nPostponed`);
+      postponedMatches.forEach(match => {
+        console.log(`${chalk.yellow(match.homeTeam)} @ ${chalk.yellow(match.awayTeam)}`);
       });
     }
   } catch (e) {

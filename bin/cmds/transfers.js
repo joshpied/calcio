@@ -9,7 +9,7 @@ function formatTransfers(data) {
   const rows = [];
   $('tr', div).each(function (index, value) {
     if (index !== 0) {
-      let row = {}; //= {};
+      let row = {};
       $('td', this).each(function (index, value) {
         switch (index) {
           case 2:
